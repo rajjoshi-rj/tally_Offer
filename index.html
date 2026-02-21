@@ -3,211 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TallyPrime | Discount Portal</title>
+    <title>TallyPrime | Discount Claim Portal</title>
     <style>
-        :root {
-            --tally-green: #00913b;
-            --tally-blue: #0b589e;
-            --tally-cyan: #149ec2;
-            --glass: rgba(255, 255, 255, 0.95);
-        }
-
-        body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; 
-            background: linear-gradient(135deg, #f0f4f8 0%, #dbeafe 100%);
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            margin: 0; 
-            padding: 20px; 
-        }
-
-        .form-card { 
-            background: var(--glass); 
-            backdrop-filter: blur(15px);
-            padding: 45px; 
-            border-radius: 30px; 
-            box-shadow: 0 30px 80px rgba(11, 88, 158, 0.15); 
-            width: 100%; 
-            max-width: 450px; 
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .form-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 6px;
-            background: linear-gradient(90deg, var(--tally-green), var(--tally-blue), var(--tally-cyan));
-        }
-
+        :root { --t-green: #00913b; --t-blue: #0b589e; --t-cyan: #149ec2; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #f0f4f8 0%, #dbeafe 100%); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .form-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 45px; border-radius: 30px; box-shadow: 0 30px 80px rgba(11, 88, 158, 0.15); width: 100%; max-width: 450px; border: 1px solid #ffffff; position: relative; }
+        .form-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--t-green), var(--t-blue), var(--t-cyan)); border-radius: 30px 30px 0 0; }
         .logo { text-align: center; margin-bottom: 30px; }
-        
-        .graded-title { 
-            background: linear-gradient(90deg, var(--tally-green) 0%, var(--tally-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 24px; 
-            font-weight: 900; 
-            text-align: center; 
-            text-transform: uppercase; 
-            margin-bottom: 30px; 
-            display: block;
-            letter-spacing: 1px;
-        }
-
-        .input-group { position: relative; margin-bottom: 20px; }
-
-        label { 
-            display: block; 
-            font-size: 11px; 
-            font-weight: 800; 
-            color: var(--tally-blue); 
-            text-transform: uppercase; 
-            margin-bottom: 6px; 
-            letter-spacing: 0.5px;
-        }
-
-        input, select { 
-            width: 100%; 
-            padding: 14px; 
-            border: 1.5px solid #cbd5e1; 
-            border-radius: 12px; 
-            font-size: 15px; 
-            box-sizing: border-box; 
-            background: #ffffff; 
-            color: #1e293b;
-            transition: all 0.3s ease;
-        }
-
-        input:focus, select:focus { 
-            border-color: var(--tally-cyan); 
-            outline: none; 
-            box-shadow: 0 0 10px rgba(20, 158, 194, 0.1);
-        }
-
-        .btn-submit { 
-            width: 100%; 
-            background: linear-gradient(135deg, #0b589e 0%, #052c50 100%); 
-            color: white; 
-            padding: 18px; 
-            border: none; 
-            border-radius: 12px; 
-            font-weight: 800; 
-            cursor: pointer; 
-            font-size: 16px; 
-            text-transform: uppercase; 
-            letter-spacing: 1px;
-            box-shadow: 0 10px 20px rgba(11, 88, 158, 0.2);
-            transition: all 0.3s ease;
-            margin-top: 15px;
-        }
-
-        .btn-submit:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 15px 25px rgba(11, 88, 158, 0.3);
-            background: linear-gradient(135deg, #004632 0%, #0b589e 100%);
-        }
-
-        .error-msg { 
-            color: #d93025; 
-            font-size: 11px; 
-            font-weight: 600;
-            margin-top: 5px;
-            display: none; 
-        }
-
-        .footer-branding {
-            text-align: center;
-            margin-top: 25px;
-            font-size: 10px;
-            color: #94a3b8;
-            letter-spacing: 1px;
-        }
+        .graded-title { background: linear-gradient(90deg, var(--t-green), var(--t-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 24px; font-weight: 900; text-align: center; text-transform: uppercase; margin-bottom: 30px; display: block; }
+        label { display: block; font-size: 11px; font-weight: 800; color: var(--t-blue); text-transform: uppercase; margin-bottom: 6px; }
+        input, select { width: 100%; padding: 14px; margin-bottom: 20px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 15px; box-sizing: border-box; background: #ffffff; }
+        input:focus { border-color: var(--t-cyan); outline: none; box-shadow: 0 0 10px rgba(20, 158, 194, 0.1); }
+        .btn-submit { width: 100%; background: linear-gradient(135deg, #0b589e 0%, #052c50 100%); color: white; padding: 18px; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(11, 88, 158, 0.3); }
+        .error-msg { color: #d93025; font-size: 11px; font-weight: 600; margin-top: -15px; margin-bottom: 15px; display: none; }
     </style>
 </head>
 <body>
     <div class="form-card">
         <div class="logo">
-            <img src="https://img.mailinblue.com/9921109/images/content_library/original/68ce3a4f12577ff65c159021.png" width="180" alt="Prajapati Computers">
+            <img src="https://img.mailinblue.com/9921109/images/content_library/original/68ce3a4f12577ff65c159021.png" width="180">
         </div>
-        
         <span class="graded-title">Claim 25% Discount</span>
-
         <form id="upgradeForm">
-            <div class="input-group">
-                <label>Company Name</label>
-                <input type="text" id="company" placeholder="Registered Company Name" required>
-            </div>
-
-            <div class="input-group">
-                <label>Contact Name</label>
-                <input type="text" id="name" placeholder="Your Full Name" required>
-            </div>
-
-            <div class="input-group">
-                <label>Contact Number</label>
-                <input type="tel" id="phone" placeholder="+91 00000 00000" required>
-            </div>
-
-            <div class="input-group">
-                <label>Tally Serial Number</label>
-                <input type="text" id="serial" placeholder="9 Digits (Starting with 7)" maxlength="9" required>
-                <div id="serialError" class="error-msg">⚠️ Serial must be 9 digits and start with 7</div>
-            </div>
-
-            <div class="input-group">
-                <label>License Type</label>
-                <select id="flavor">
-                    <option value="Silver">Silver (Single User)</option>
-                    <option value="Gold">Gold (Multi-User)</option>
-                    <option value="Auditor">Auditor (CA License)</option>
-                </select>
-            </div>
-
-            <button type="button" class="btn-submit" onclick="validateAndSend()">Share Details</button>
+            <label>Registered Company</label>
+            <input type="text" id="company" placeholder="Enter Company Name" required>
+            
+            <label>Contact Name</label>
+            <input type="text" id="name" placeholder="Full Name" required>
+            
+            <label>Mobile Number</label>
+            <input type="tel" id="phone" placeholder="+91 00000 00000" required>
+            
+            <label>Tally Serial Number</label>
+            <input type="text" id="serial" placeholder="9 Digits (Starts with 7)" maxlength="9" required>
+            <div id="serialError" class="error-msg">⚠️ Serial must be 9 digits and start with 7</div>
+            
+            <label>License Flavor</label>
+            <select id="flavor">
+                <option value="Silver">Silver (Single User)</option>
+                <option value="Gold">Gold (Multi-User)</option>
+                <option value="Auditor">Auditor (CA License)</option>
+            </select>
+            
+            <button type="button" class="btn-submit" id="submitBtn">Share Details</button>
         </form>
-
-        <div class="footer-branding">
-            © 2026 PRAJAPATI COMPUTERS
-        </div>
     </div>
 
     <script>
-        function validateAndSend() {
-            const company = document.getElementById('company').value;
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const serial = document.getElementById('serial').value;
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            const company = document.getElementById('company').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const serial = document.getElementById('serial').value.trim();
             const flavor = document.getElementById('flavor').value;
             const errorDiv = document.getElementById('serialError');
             const serialInput = document.getElementById('serial');
 
-            // VALIDATION: Must start with 7 and be exactly 9 digits
+            // 1. Validate All Fields
+            if (!company || !name || !phone || !serial) {
+                alert("Please fill in all details before submitting.");
+                return;
+            }
+
+            // 2. Validate Serial (9 digits, starts with 7)
             const serialPattern = /^7\d{8}$/;
-            
             if (!serialPattern.test(serial)) {
                 errorDiv.style.display = 'block';
                 serialInput.style.borderColor = '#d93025';
+                serialInput.focus();
                 return;
             } else {
                 errorDiv.style.display = 'none';
                 serialInput.style.borderColor = '#cbd5e1';
             }
 
-            if(!company || !name || !phone) {
-                alert("Please complete all fields to claim your discount.");
-                return;
-            }
-
-            const subject = "TallyPrime Discount Claim | " + company;
-            const body = `DISCOUNT CLAIM DETAILS\n--------------------------\nCompany  : ${company}\nContact  : ${name}\nMobile   : ${phone}\nSerial   : ${serial}\nLicense  : ${flavor}\n--------------------------`;
+            // 3. Construct Subject (As you requested)
+            const subject = `25% Discount Renew | ERP9 to Prime | ${company} | Serial: ${serial}`;
             
-            window.location.href = `mailto:support@prajapaticomputers.in?cc=sales@prajapaticomputers.in,ishwar@prajapaticomputers.in,vishalprajapati@prajapaticomputers.in&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        }
+            // 4. Construct Body
+            const body = `UPGRADE DETAILS\n----------------\nCompany: ${company}\nContact: ${name}\nMobile: ${phone}\nSerial: ${serial}\nLicense: ${flavor}\n----------------\nRequest for 25% Discount Tally Renewal.`;
+
+            // 5. Final Mailto Link
+            const mailtoLink = `mailto:support@prajapaticomputers.in?cc=sales@prajapaticomputers.in,ishwar@prajapaticomputers.in,vishalprajapati@prajapaticomputers.in&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            // 6. Execution
+            window.location.href = mailtoLink;
+        });
     </script>
 </body>
 </html>
