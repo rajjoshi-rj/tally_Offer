@@ -6,20 +6,146 @@
     <title>TallyPrime | Discount Claim Portal</title>
     <style>
         :root { --t-green: #00913b; --t-blue: #0b589e; --t-cyan: #149ec2; }
-        body { font-family: 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #f0f4f8 0%, #dbeafe 100%); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .form-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 45px; border-radius: 30px; box-shadow: 0 30px 80px rgba(11, 88, 158, 0.15); width: 100%; max-width: 450px; border: 1px solid #ffffff; position: relative; }
-        .form-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--t-green), var(--t-blue), var(--t-cyan)); border-radius: 30px 30px 0 0; }
+        
+        body { 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            background: #f0f7ff; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 20px; 
+            overflow: hidden; /* Contains background shapes */
+            position: relative;
+        }
+
+        /* --- 3D FLOATING BACKGROUND SHAPES --- */
+        .bg-shapes {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(11, 88, 158, 0.1), rgba(20, 158, 194, 0.1));
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(5px);
+            border-radius: 20%;
+            animation: float 20s infinite linear;
+        }
+
+        .shape:nth-child(1) { width: 150px; height: 150px; top: 10%; left: 10%; animation-duration: 25s; }
+        .shape:nth-child(2) { width: 100px; height: 100px; top: 70%; left: 80%; border-radius: 50%; animation-duration: 18s; }
+        .shape:nth-child(3) { width: 80px; height: 80px; top: 40%; left: 85%; animation-duration: 22s; }
+        .shape:nth-child(4) { width: 120px; height: 120px; top: 80%; left: 15%; border-radius: 30%; animation-duration: 30s; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
+            50% { transform: translateY(-100px) rotate(180deg); opacity: 0.8; }
+            100% { transform: translateY(0) rotate(360deg); opacity: 0.5; }
+        }
+
+        /* --- ADVANCED GLASS CARD --- */
+        .form-card { 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(15px); 
+            padding: 45px; 
+            border-radius: 30px; 
+            box-shadow: 0 30px 80px rgba(11, 88, 158, 0.15); 
+            width: 100%; 
+            max-width: 450px; 
+            border: 1px solid #ffffff; 
+            position: relative; 
+            z-index: 10;
+            transition: transform 0.3s ease;
+        }
+
+        /* Subtle Tilt on Hover */
+        .form-card:hover { transform: translateY(-5px); }
+
+        .form-card::before { 
+            content: ""; 
+            position: absolute; 
+            top: 0; left: 0; 
+            width: 100%; height: 6px; 
+            background: linear-gradient(90deg, var(--t-green), var(--t-blue), var(--t-cyan)); 
+            border-radius: 30px 30px 0 0; 
+        }
+
         .logo { text-align: center; margin-bottom: 30px; }
-        .graded-title { background: linear-gradient(90deg, var(--t-green), var(--t-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 24px; font-weight: 900; text-align: center; text-transform: uppercase; margin-bottom: 30px; display: block; }
+        
+        .graded-title { 
+            background: linear-gradient(90deg, var(--t-green), var(--t-blue)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            font-size: 24px; 
+            font-weight: 900; 
+            text-align: center; 
+            text-transform: uppercase; 
+            margin-bottom: 30px; 
+            display: block; 
+        }
+
         label { display: block; font-size: 11px; font-weight: 800; color: var(--t-blue); text-transform: uppercase; margin-bottom: 6px; }
-        input, select { width: 100%; padding: 14px; margin-bottom: 20px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 15px; box-sizing: border-box; background: #ffffff; }
-        input:focus { border-color: var(--t-cyan); outline: none; box-shadow: 0 0 10px rgba(20, 158, 194, 0.1); }
-        .btn-submit { width: 100%; background: linear-gradient(135deg, #0b589e 0%, #052c50 100%); color: white; padding: 18px; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(11, 88, 158, 0.3); }
+        
+        input, select { 
+            width: 100%; 
+            padding: 14px; 
+            margin-bottom: 20px; 
+            border: 1.5px solid #cbd5e1; 
+            border-radius: 12px; 
+            font-size: 15px; 
+            box-sizing: border-box; 
+            background: rgba(255, 255, 255, 0.9); 
+            transition: all 0.3s ease;
+        }
+
+        input:focus { 
+            border-color: var(--t-cyan); 
+            outline: none; 
+            box-shadow: 0 0 15px rgba(20, 158, 194, 0.15); 
+            background: #ffffff;
+        }
+
+        .btn-submit { 
+            width: 100%; 
+            background: linear-gradient(135deg, #0b589e 0%, #052c50 100%); 
+            color: white; 
+            padding: 18px; 
+            border: none; 
+            border-radius: 12px; 
+            font-weight: 800; 
+            cursor: pointer; 
+            font-size: 16px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            transition: 0.3s; 
+            box-shadow: 0 10px 20px rgba(11, 88, 158, 0.2);
+        }
+
+        .btn-submit:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 15px 25px rgba(11, 88, 158, 0.3); 
+            background: linear-gradient(135deg, var(--t-green) 0%, var(--t-blue) 100%);
+        }
+
         .error-msg { color: #d93025; font-size: 11px; font-weight: 600; margin-top: -15px; margin-bottom: 15px; display: none; }
+        
+        .footer { text-align: center; margin-top: 25px; font-size: 10px; color: #94a3b8; letter-spacing: 1px; }
     </style>
 </head>
 <body>
+
+    <div class="bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
     <div class="form-card">
         <div class="logo">
             <img src="https://img.mailinblue.com/9921109/images/content_library/original/68ce3a4f12577ff65c159021.png" width="180">
@@ -48,6 +174,7 @@
             
             <button type="button" class="btn-submit" id="submitBtn">Share Details</button>
         </form>
+        <div class="footer">PRAJAPATI COMPUTERS © 2026</div>
     </div>
 
     <script>
@@ -60,13 +187,11 @@
             const errorDiv = document.getElementById('serialError');
             const serialInput = document.getElementById('serial');
 
-            // 1. Validate All Fields
             if (!company || !name || !phone || !serial) {
                 alert("Please fill in all details before submitting.");
                 return;
             }
 
-            // 2. Validate Serial (9 digits, starts with 7)
             const serialPattern = /^7\d{8}$/;
             if (!serialPattern.test(serial)) {
                 errorDiv.style.display = 'block';
@@ -78,16 +203,11 @@
                 serialInput.style.borderColor = '#cbd5e1';
             }
 
-            // 3. Construct Subject (As you requested)
             const subject = `25% Discount Renew | ERP9 to Prime | ${company} | Serial: ${serial}`;
-            
-            // 4. Construct Body
             const body = `UPGRADE DETAILS\n----------------\nCompany: ${company}\nContact: ${name}\nMobile: ${phone}\nSerial: ${serial}\nLicense: ${flavor}\n----------------\nRequest for 25% Discount Tally Renewal.`;
 
-            // 5. Final Mailto Link
             const mailtoLink = `mailto:support@prajapaticomputers.in?cc=sales@prajapaticomputers.in,ishwar@prajapaticomputers.in,vishalprajapati@prajapaticomputers.in&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-            // 6. Execution
             window.location.href = mailtoLink;
         });
     </script>
